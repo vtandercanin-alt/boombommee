@@ -1,0 +1,26 @@
+# Render Blueprint — deploy bot + Mini App with one click.
+# Docs: https://render.com/docs/blueprint-spec
+#
+# AFTER first deploy, copy the service URL (e.g. https://kraken-case-bot-xxxx.onrender.com)
+# and set it as WEB_APP_URL in Environment variables, then redeploy.
+#
+services:
+  - type: web
+    name: kraken-case-bot
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: python main.py
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
+      - key: BOT_TOKEN
+        sync: false  # set this in the Render dashboard (never commit to git!)
+      - key: DATABASE_URL
+        value: sqlite+aiosqlite:///data.db
+      - key: WEB_APP_URL
+        sync: false  # set after first deploy to https://<your-service>.onrender.com
+      - key: MINI_APP_URL
+        sync: false  # same as WEB_APP_URL
+      - key: DOMAIN
+        sync: false  # optional, for future use

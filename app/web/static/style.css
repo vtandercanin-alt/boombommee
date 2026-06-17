@@ -1,0 +1,351 @@
+/* === KRAKEN CASE — Telegram Mini App === */
+/* Dark theme with green/purple accents */
+
+:root {
+    --bg-primary: #0f0f1a;
+    --bg-secondary: #1a1a2e;
+    --bg-card: #25253d;
+    --accent-green: #00e676;
+    --accent-purple: #7c4dff;
+    --accent-red: #ff5252;
+    --accent-gold: #ffd740;
+    --text-primary: #ffffff;
+    --text-secondary: #b0b0c8;
+    --radius: 16px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    min-height: 100vh;
+    overflow-x: hidden;
+    -webkit-tap-highlight-color: transparent;
+}
+
+#app {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    padding-bottom: 70px; /* space for bottom nav */
+}
+
+/* --- Header --- */
+#header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    background: var(--bg-secondary);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.logo {
+    font-size: 18px;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--accent-green), var(--accent-purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.balance {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--accent-gold);
+    background: var(--bg-card);
+    padding: 6px 14px;
+    border-radius: 20px;
+}
+
+/* --- Screens --- */
+.screen {
+    display: none;
+    padding: 20px 16px;
+    animation: fadeIn 0.25s ease;
+}
+
+.screen.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- Welcome --- */
+.welcome {
+    text-align: center;
+    margin: 30px 0 24px;
+}
+
+.welcome-icon {
+    font-size: 64px;
+    margin-bottom: 12px;
+}
+
+.welcome h2 {
+    font-size: 22px;
+    margin-bottom: 8px;
+}
+
+.welcome p {
+    color: var(--text-secondary);
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+/* --- Buttons --- */
+.btn {
+    display: block;
+    width: 100%;
+    padding: 16px;
+    border: none;
+    border-radius: var(--radius);
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.1s, opacity 0.1s;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.btn:active {
+    transform: scale(0.97);
+    opacity: 0.9;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--accent-green), #00c853);
+    color: #000;
+    box-shadow: 0 4px 20px rgba(0, 230, 118, 0.25);
+}
+
+.btn-secondary {
+    background: var(--bg-card);
+    color: var(--text-primary);
+    border: 1px solid rgba(255,255,255,0.08);
+}
+
+.btn-big {
+    font-size: 20px;
+    padding: 20px;
+}
+
+/* --- Info cards --- */
+.info-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+.info-card {
+    background: var(--bg-card);
+    border-radius: var(--radius);
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+}
+
+.info-label {
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+.info-value {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+/* --- Case result --- */
+.case-result {
+    text-align: center;
+    margin-top: 40px;
+}
+
+.result-icon {
+    font-size: 80px;
+    animation: bounce 0.6s ease;
+    margin-bottom: 16px;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+}
+
+.result-reward {
+    font-size: 36px;
+    font-weight: 800;
+    color: var(--accent-gold);
+    margin: 16px 0 8px;
+}
+
+.result-profit {
+    font-size: 18px;
+    margin-bottom: 24px;
+}
+
+.result-profit.positive {
+    color: var(--accent-green);
+}
+
+.result-profit.negative {
+    color: var(--accent-red);
+}
+
+.result-profit.neutral {
+    color: var(--text-secondary);
+}
+
+/* --- Leaderboard --- */
+.leaderboard {
+    margin: 16px 0;
+}
+
+.lb-entry {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    background: var(--bg-card);
+    border-radius: var(--radius);
+    margin-bottom: 8px;
+}
+
+.lb-entry.top-1 {
+    background: linear-gradient(135deg, rgba(255,215,64,0.15), rgba(255,215,64,0.05));
+    border: 1px solid rgba(255,215,64,0.2);
+}
+
+.lb-entry.top-2 {
+    background: linear-gradient(135deg, rgba(192,192,192,0.15), rgba(192,192,192,0.05));
+    border: 1px solid rgba(192,192,192,0.2);
+}
+
+.lb-entry.top-3 {
+    background: linear-gradient(135deg, rgba(205,127,50,0.15), rgba(205,127,50,0.05));
+    border: 1px solid rgba(205,127,50,0.2);
+}
+
+.lb-place {
+    font-size: 20px;
+    font-weight: 700;
+    min-width: 32px;
+    text-align: center;
+}
+
+.lb-name {
+    flex: 1;
+    font-size: 15px;
+    font-weight: 600;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.lb-earned {
+    font-size: 14px;
+    color: var(--accent-gold);
+    font-weight: 600;
+}
+
+/* --- Error --- */
+.error-box {
+    text-align: center;
+    margin-top: 60px;
+}
+
+.error-icon {
+    font-size: 48px;
+    margin-bottom: 12px;
+}
+
+.error-box p {
+    color: var(--text-secondary);
+    margin-bottom: 20px;
+}
+
+/* --- Bottom nav --- */
+#nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    background: var(--bg-secondary);
+    border-top: 1px solid rgba(255,255,255,0.06);
+    padding: 6px 0;
+    padding-bottom: max(6px, env(safe-area-inset-bottom));
+    z-index: 100;
+}
+
+.nav-btn {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 11px;
+    cursor: pointer;
+    padding: 4px;
+    transition: color 0.15s;
+}
+
+.nav-btn.active {
+    color: var(--accent-green);
+}
+
+.nav-icon {
+    font-size: 22px;
+}
+
+.nav-label {
+    font-size: 11px;
+}
+
+/* --- Loading spinner --- */
+.spinner {
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    border: 3px solid rgba(255,255,255,0.15);
+    border-top-color: var(--accent-green);
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    margin: 40px auto;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* --- Scrollbar --- */
+::-webkit-scrollbar {
+    width: 4px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.1);
+    border-radius: 4px;
+}

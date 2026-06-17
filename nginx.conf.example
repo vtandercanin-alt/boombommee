@@ -1,0 +1,65 @@
+# Nginx configuration for KRAKEN CASE Bot
+# Place this in /etc/nginx/sites-available/cr722031.tw1.ru
+
+server {
+    listen 80;
+    listen [::]:80;
+    server_name cr722031.tw1.ru www.cr722031.tw1.ru;
+
+    # Redirect HTTP to HTTPS
+    return 301 https://$server_name$request_uri;
+}
+
+server {
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2;
+    server_name cr722031.tw1.ru www.cr722031.tw1.ru;
+
+    # SSL Certificate (use Let's Encrypt)
+    ssl_certificate /etc/letsencrypt/live/cr722031.tw1.ru/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/cr722031.tw1.ru/privkey.pem;
+
+    # SSL Configuration
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_ciphers HIGH:!aNULL:!MD5;
+    ssl_prefer_server_ciphers on;
+
+    # Security headers
+    add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
+    add_header X-Content-Type-Options "nosniff" always;
+    add_header X-Frame-Options "SAMEORIGIN" always;
+    add_header X-XSS-Protection "1; mode=block" always;
+
+    # Logs
+    access_log /var/log/nginx/cr722031.tw1.ru.access.log;
+    error_log /var/log/nginx/cr722031.tw1.ru.error.log;
+
+    # Telegram Bot Webhook
+    location /webhook/telegram {
+        proxy_pass http://localhost:8000/webhook/telegram;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+
+    # Mini App Frontend
+    location / {
+        proxy_pass http://localhost:3000;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+
+        # WebSocket support (if needed)
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+    }
+
+    # Health check endpoint
+    location /health {
+        proxy_pass http://localhost:8000/health;
+        access_log off;
+    }
+}

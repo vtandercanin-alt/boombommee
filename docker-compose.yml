@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: kraken_case_db
+    environment:
+      POSTGRES_USER: kraken_user
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-kraken_password}
+      POSTGRES_DB: kraken_case_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U kraken_user"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  bot:
+    build: .
+    container_name: kraken_case_bot
+    environment:
+      BOT_TOKEN: ${BOT_TOKEN}
+      DATABASE_URL: postgresql+asyncpg://kraken_user:${POSTGRES_PASSWORD:-kraken_password}@postgres:5432/kraken_case_db
+      MINI_APP_URL: ${MINI_APP_URL:-https://cr722031.tw1.ru}
+      WEB_APP_URL: ${WEB_APP_URL:-https://cr722031.tw1.ru/app}
+      DOMAIN: ${DOMAIN:-cr722031.tw1.ru}
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - kraken_network
+
+volumes:
+  postgres_data:
+
+networks:
+  kraken_network:
+    driver: bridge
