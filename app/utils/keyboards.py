@@ -62,3 +62,10 @@ def get_back_button() -> InlineKeyboardMarkup:
         ]
     )
     return keyboard
+
+
+def get_profile_keyboard() -> InlineKeyboardMarkup:
+    """Profile keyboard kept for backward compatibility."""
+    # Historically some handlers imported `get_profile_keyboard`.
+    # Return the same simple back button keyboard by default.
+    return get_back_button()

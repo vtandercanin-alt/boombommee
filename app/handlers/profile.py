@@ -4,7 +4,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.database.user_repo import UserRepository
 from app.database.db import db
 from app.utils.cases import RankSystem
-from app.utils.keyboards import get_profile_keyboard, get_main_menu
+from app.utils.keyboards import get_main_menu, get_back_button
 from app.config import config
 
 router = Router()
@@ -35,7 +35,7 @@ async def show_profile(message: Message):
             f"{next_rank_text}"
         )
         
-        await message.answer(profile_text, reply_markup=get_profile_keyboard(), parse_mode="HTML")
+        await message.answer(profile_text, reply_markup=get_back_button(), parse_mode="HTML")
     finally:
         await session.close()
 
