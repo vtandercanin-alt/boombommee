@@ -142,12 +142,56 @@ body {
     padding: 20px;
 }
 
+/* --- Feature list (stacked cards like example) --- */
+.feature-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    max-width: 420px;
+    margin: 18px auto;
+}
+
+.feature-card {
+    display: block;
+    padding: 18px 20px;
+    border-radius: 14px;
+    color: #fff;
+    text-decoration: none;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+}
+
+.feature-card .feature-title {
+    font-size: 18px;
+    font-weight: 800;
+}
+
+.feature-card .feature-sub {
+    font-size: 13px;
+    color: rgba(255,255,255,0.9);
+    margin-top: 6px;
+    opacity: 0.95;
+}
+
+.feature-free {
+    background: linear-gradient(90deg, #3a3a3a, #222);
+}
+
+.feature-roulette {
+    background: linear-gradient(90deg, #ff5f6d, #ffc371);
+    color: #111;
+}
+
 /* --- Info cards --- */
 .info-cards {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 12px;
     margin-top: 24px;
+}
+
+.info-cards.compact {
+    max-width: 420px;
+    margin: 14px auto 30px;
 }
 
 .info-card {

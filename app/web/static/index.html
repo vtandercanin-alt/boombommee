@@ -21,17 +21,20 @@
 
         <!-- Screens -->
         <main id="main">
-            <!-- Home -->
+            <!-- Home (simplified list like example: only Free Case & Roulette) -->
             <section id="screen-home" class="screen active">
-                <div class="welcome">
-                    <div class="welcome-icon">🎮</div>
-                    <h2>Добро пожаловать!</h2>
-                    <p>Открывай кейсы, выигрывай звёзды и поднимайся в рейтинге!</p>
+                <div class="feature-list">
+                    <a class="feature-card feature-free" href="#" onclick="KrakenApp.openCase(); return false;">
+                        <div class="feature-title">Бесплатно</div>
+                        <div class="feature-sub">Бесплатные кейсы и задания</div>
+                    </a>
+
+                    <a class="feature-card feature-roulette" href="#" onclick="KrakenApp.openRoulette(); return false;">
+                        <div class="feature-title">Рулетка</div>
+                        <div class="feature-sub">Крути рулетку и получай призы</div>
+                    </a>
                 </div>
-                <button class="btn btn-primary btn-big" onclick="KrakenApp.openCase()">
-                    🎁 Открыть кейс
-                </button>
-                <div class="info-cards">
+                <div class="info-cards compact">
                     <div class="info-card">
                         <span class="info-label">📦 Открыто кейсов</span>
                         <span id="stat-cases" class="info-value">0</span>

@@ -127,6 +127,42 @@ const KrakenApp = (() => {
         showScreen('result');
     }
 
+    // Simple roulette flow — tries API, otherwise shows placeholder
+    async function openRoulette() {
+        // try server roulette endpoint
+        const data = await apiPost('/api/roulette', { init_data: initData });
+        if (!data) {
+            // placeholder UI: show a small modal-like result screen
+            $('result-icon').textContent = '🎡';
+            $('result-title').textContent = 'Рулетка (демо)';
+            $('result-reward').textContent = '+0 ⭐';
+            $('result-profit').textContent = 'Крути рулетку, чтобы выиграть!';
+            $('result-profit').className = 'result-profit neutral';
+            showScreen('result');
+            return;
+        }
+
+        // If backend returned a roulette result, show it similarly to case
+        const icon = data.profit >= 0 ? '🎉' : '😔';
+        $('result-icon').textContent = icon;
+        $('result-title').textContent = 'Рулетка завершена!';
+        $('result-reward').textContent = '+' + (data.reward || 0).toFixed(0) + ' ⭐';
+        const profitEl = $('result-profit');
+        if (data.profit > 0) {
+            profitEl.textContent = '+' + data.profit.toFixed(0) + ' ⭐ (прибыль!)';
+            profitEl.className = 'result-profit positive';
+        } else if (data.profit < 0) {
+            profitEl.textContent = data.profit.toFixed(0) + ' ⭐ (убыток)';
+            profitEl.className = 'result-profit negative';
+        } else {
+            profitEl.textContent = '0 ⭐ (без изменений)';
+            profitEl.className = 'result-profit neutral';
+        }
+
+        updateUI({ balance: data.balance, rank: data.rank });
+        showScreen('result');
+    }
+
     async function showLeaderboard() {
         showScreen('leaderboard');
         const data = await apiGet('/api/leaderboard');
